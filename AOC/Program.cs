@@ -5,6 +5,7 @@ using AOC.Day_01;
 using AOC.Day_02;
 using AOC.Day_03;
 using AOC.Day_04;
+using AOC.Day_05;
 
 var day1 = new Day1();
 Console.WriteLine("Day 1 part 1 = {0}", day1.SolutionPart1());
@@ -24,3 +25,8 @@ Console.WriteLine("Day 3 part 2 = {0}", day3.SolutionPart2());
 var day4 = new Day4();
 Console.WriteLine("Day 4 part 1 = {0}", day4.SolutionPart1());
 Console.WriteLine("Day 4 part 2 = {0}", day4.SolutionPart2());
+
+
+var day5 = new Day5();
+Console.WriteLine("Day 5 part 1 = {0}", day5.SolutionPart1());
+Console.WriteLine("Day 5 part 2 = {0}", day5.SolutionPart2());
