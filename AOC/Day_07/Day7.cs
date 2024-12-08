@@ -57,8 +57,6 @@ namespace AOC.Day_07
                 var target = Convert.ToInt64(splitted[0]);
                 var numbers = splitted[1].Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt64(x)).ToList();
                 rows.Add(i, new Equation(target, numbers));
-
-
             }
 
         }
@@ -72,6 +70,28 @@ namespace AOC.Day_07
 
             return total;
         }
+
+        // 21572148763543
+
+        public long SolutionPart2()
+        {
+            long total = 0;
+            var notValids = rows.Where(x => !x.Value.Valid).ToDictionary();
+
+            foreach (var row in notValids)
+            {
+                total = GetTotal(total, row.Key, row.Value.Target, row.Value.Numbers, true);
+            }
+
+            var validCount = rows.Where(x => x.Value.Valid).Count();
+
+            var totalTotal = rows.Where(x => x.Value.Valid).Sum(x => x.Value.Target);
+
+            return totalTotal;
+        }
+
+        // 21572148763543 + 560368945765620
+        // 581941094529163
 
         private long GetTotal(long total, int rowKey, long target, List<long> numbers, bool withAddition = false)
         {
@@ -149,27 +169,5 @@ namespace AOC.Day_07
             }
             return currentTotal;
         }
-
-        // 21572148763543
-
-        public long SolutionPart2()
-        {
-            long total = 0;
-            var notValids = rows.Where(x => !x.Value.Valid).ToDictionary();
-
-            foreach (var row in notValids)
-            {
-                total = GetTotal(total, row.Key, row.Value.Target, row.Value.Numbers, true);
-            }
-
-            var validCount = rows.Where(x => x.Value.Valid).Count();
-
-            var totalTotal = rows.Where(x => x.Value.Valid).Sum(x => x.Value.Target);
-
-            return totalTotal;
-        }
     }
-
-    // 21572148763543 + 560368945765620
-    // 581941094529163
 }
