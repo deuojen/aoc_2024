@@ -12,43 +12,110 @@ using static System.Net.Mime.MediaTypeNames;
 namespace AOC.Day_11
 {
 
-//    Dictionary<long, long> cache = new();
+    //    Dictionary<long, long> cache = new();
 
-//    var input = File.ReadAllText("./Day_11/InputOriginal.txt").Trim()
-//        .Split(' ')
-//        .Select(long.Parse)
-//        .ToArray();
+    //    var input = File.ReadAllText("./Day_11/InputOriginal.txt").Trim()
+    //        .Split(' ')
+    //        .Select(long.Parse)
+    //        .ToArray();
 
-//    Console.WriteLine(Solve(25));
-//Console.WriteLine(Solve(75));
+    //    Console.WriteLine(Solve(25));
+    //Console.WriteLine(Solve(75));
 
-//long Solve(int n)
-//    {
-//        long sum = 0;
-//        for (int i = 0; i < input.Length; i++)
-//            sum += Calc(input[i], n);
-//        return sum;
-//    }
+    //long Solve(int n)
+    //    {
+    //        long sum = 0;
+    //        for (int i = 0; i < input.Length; i++)
+    //            sum += Calc(input[i], n);
+    //        return sum;
+    //    }
 
-//    long Calc(long value, long depth)
-//    {
-//        if (depth == 0)
-//            return 1;
-//        if (value == 0)
-//            return Calc(1, depth - 1);
-//        long key, div, mod;
-//        if (!cache.TryGetValue(key = value << 7 | --depth, out long r))
-//        {
-//            for ((div, mod) = (10, 10); r == 0; (div, mod) = (div * 100, mod * 10))
-//                r = value < div
-//                    ? Calc(value * 2024, depth)
-//                    : value < div * 10
-//                        ? Calc(value / mod, depth) + Calc(value % mod, depth)
-//                        : 0;
-//            cache.Add(key, r);
-//        }
-//        return r;
-//    }
+    //    long Calc(long value, long depth)
+    //    {
+    //        if (depth == 0)
+    //            return 1;
+    //        if (value == 0)
+    //            return Calc(1, depth - 1);
+    //        long key, div, mod;
+    //        if (!cache.TryGetValue(key = value << 7 | --depth, out long r))
+    //        {
+    //            for ((div, mod) = (10, 10); r == 0; (div, mod) = (div * 100, mod * 10))
+    //                r = value < div
+    //                    ? Calc(value * 2024, depth)
+    //                    : value < div * 10
+    //                        ? Calc(value / mod, depth) + Calc(value % mod, depth)
+    //                        : 0;
+    //            cache.Add(key, r);
+    //        }
+    //        return r;
+    //    }
+
+
+    public class Day11_2
+    {
+        private string InputFilePath = "./Day_11/InputOriginal.txt";
+
+        private readonly List<long> _input;
+
+        public Day11_2()
+        {
+            _input = File.ReadAllText(InputFilePath).Split(' ').Select(long.Parse).ToList();
+        }
+
+        public ValueTask<string> Solve_1()
+        {
+            var stones = GetStonesAfterIteration(25);
+
+            return new(stones.Values.Sum().ToString());
+        }
+
+        public ValueTask<string> Solve_2()
+        {
+            var stones = GetStonesAfterIteration(75);
+
+            return new(stones.Values.Sum().ToString());
+        }
+
+        private Dictionary<long, long> GetStonesAfterIteration(int iteration)
+        {
+            var stones = _input.ToDictionary(x => x, x => _input.LongCount(y => y == x));
+            stones.TryAdd(1, 0);
+
+            for (var i = 0; i < iteration; i++)
+            {
+                var modifications = new Dictionary<long, long> { { 1, 0 } };
+                foreach (var stone in stones)
+                {
+                    if (stone.Key == 0)
+                        AddStoneToModifiedList(1, stone.Value, modifications);
+                    else if (stone.Key.ToString().Length % 2 == 0)
+                    {
+                        var stoneString = stone.Key.ToString();
+                        var leftStone = int.Parse(stoneString[..(stoneString.Length / 2)]);
+                        var rightStone = int.Parse(stoneString[(stoneString.Length / 2)..]);
+
+                        AddStoneToModifiedList(leftStone, stone.Value, modifications);
+                        AddStoneToModifiedList(rightStone, stone.Value, modifications);
+                    }
+                    else
+                        AddStoneToModifiedList(stone.Key * 2024, stone.Value, modifications);
+
+                    stones.Remove(stone.Key);
+                }
+
+                foreach (var modification in modifications)
+                    stones[modification.Key] = modification.Value;
+            }
+
+            return stones.Where(x => x.Value > 0).ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        private static void AddStoneToModifiedList(long key, long value, Dictionary<long, long> modifications)
+        {
+            if (!modifications.TryAdd(key, value))
+                modifications[key] += value;
+        }
+    }
 
     class SetOfNumbers
     {
