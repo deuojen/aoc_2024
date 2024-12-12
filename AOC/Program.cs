@@ -11,6 +11,7 @@ using AOC.Day_07;
 using AOC.Day_08;
 using AOC.Day_09;
 using AOC.Day_10;
+using AOC.Day_11;
 
 //var day1 = new Day1();
 //Console.WriteLine("Day 1 part 1 = {0}", day1.SolutionPart1());
@@ -54,7 +55,12 @@ using AOC.Day_10;
 //Console.WriteLine("Day 9 part 1 = {0}", day9.SolutionPart1());
 //Console.WriteLine("Day 9 part 2 = {0}", day9.SolutionPart2());
 
+//var day10 = new Day10();
+//Console.WriteLine("Day 10 part 1 = {0}", day10.SolutionPart1());
+//Console.WriteLine("Day 10 part 2 = {0}", day10.SolutionPart2());
 
-var day10 = new Day10();
-Console.WriteLine("Day 10 part 1 = {0}", day10.SolutionPart1());
-Console.WriteLine("Day 10 part 2 = {0}", day10.SolutionPart2());
+//var day11 = new Day11();
+//Console.WriteLine("Day 11 part 1 = {0}", day11.SolutionPart1());
+//Console.WriteLine("Day 11 part 2 = {0}", day11.SolutionPart2());
+
+
