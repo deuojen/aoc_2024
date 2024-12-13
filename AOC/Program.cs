@@ -13,6 +13,7 @@ using AOC.Day_09;
 using AOC.Day_10;
 using AOC.Day_11;
 using AOC.Day_12;
+using AOC.Day_13;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -74,5 +75,7 @@ using System.Resources;
 //Console.WriteLine("Day 12 part 2 = {0}", day12.SolutionPart2());
 
 
-
+var day13 = new Day13();
+Console.WriteLine("Day 13 part 1 = {0}", day13.SolutionPart1());
+Console.WriteLine("Day 13 part 2 = {0}", day13.SolutionPart2());
 
